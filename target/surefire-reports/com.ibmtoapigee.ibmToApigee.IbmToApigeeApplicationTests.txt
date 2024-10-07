@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.ibmtoapigee.ibmToApigee.IbmToApigeeApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.877 s - in com.ibmtoapigee.ibmToApigee.IbmToApigeeApplicationTests

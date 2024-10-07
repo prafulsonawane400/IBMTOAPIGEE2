@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Connect to APIGEE Migration Tool</title>
+    <style>
+        body {
+            background-image: url('images/background.webp');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+        }
+        .header {
+            background-color: #333;
+            color: #47d7ac;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+        .logo {
+            max-width: 100px;
+            margin-right: 10px;
+        }
+        .title {
+            font-size: 24px;
+            margin: 0;
+            padding-left: 250px;
+        }
+        .footer {
+            background-color: #333;
+            color: #47d7ac;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        
+         /* Basic styling for the table (adjust as needed) */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img class="logo" alt="Nagarro logo" width="200" src="https://www.nagarro.com/hubfs/NagarroWebsiteRedesign-Aug2020/Assets/Images/Nagarro%20green%20logo%20with%20title_opt.svg">
+        <h1 class="title">API Connect to APIGEE Migration Tool</h1>
+    </div>
+
+    <div class="container">
+    	<h4><a style="color:white" href="/v/dashboard">Dashboard</a></h4>
+    
+       <form action="/upload-file" method="post" enctype="multipart/form-data">
+            <u th:if="!${success}" style="color: #fff;"><label for="file-input">Select API Connect source file</label></u><br><br>
+            <input type="file" name="file" id="file-input" accept=".yaml, .yml" style="display: none;">
+            <label th:if="!${success}" for="comment" style="color: #fff;">Acceptable format is .yaml or .yml file</label><br><br>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <input type="submit" value="Submit" style="display: none;">
+            </div>
+        </form>
+        <p id="file-info" style="color: #fff;"></p>
+        <h4 th:if="${success}" style="color: #ffffff; font-family: Palatino, URW Palladio L, serif">Your IBM API Connect file converted to APIGEE Bundle</h4>
+											
+											
+    </div>
+
+    <div class="footer">
+        &copy; Copyright by Nagarro APIM Practice
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('file-input');
+        const fileInfo = document.getElementById('file-info');
+        const submitButton = document.querySelector('input[type="submit"]');
+
+        fileInput.addEventListener('change', function() {
+            const selectedFile = fileInput.files[0];
+            if (selectedFile) {
+                fileInfo.innerHTML = `Selected File: ${selectedFile.name}`;
+                submitButton.style.display = 'block';
+            } else {
+                fileInfo.innerHTML = 'No file selected';
+                submitButton.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

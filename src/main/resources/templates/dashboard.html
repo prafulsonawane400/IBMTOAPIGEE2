@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Connect to APIGEE Migration Tool</title>
+    <style>
+        body {
+            background-image: url('images/background.webp');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+        }
+        .header {
+            background-color: #333;
+            color: #47d7ac;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+        .logo {
+            max-width: 100px;
+            margin-right: 10px;
+        }
+        .title {
+            font-size: 24px;
+            margin: 0;
+            padding-left: 250px;
+        }
+        .footer {
+            background-color: #333;
+            color: #47d7ac;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        
+         /* Basic styling for the table (adjust as needed) */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img class="logo" alt="Nagarro logo" width="200" src="https://www.nagarro.com/hubfs/NagarroWebsiteRedesign-Aug2020/Assets/Images/Nagarro%20green%20logo%20with%20title_opt.svg">
+        <h1 class="title">API Connect to APIGEE Migration Tool</h1>
+    </div>
+
+    <div class="container">
+											
+											
+											<h1 style>File List</h1><h5><a href="/">Uplaod New File</a></h5>
+											 <table>
+        <thead>
+            <tr>
+                <th>File Id</th>
+                <th>File Name</th>
+                <th>Created Date</th>
+                <th>Download</th>
+                <th>Is Uploaded</th>
+                <th>Is Deployed</th>
+                <th>Logs</th>
+            </tr>
+        </thead>
+        <tbody>
+             <tr th:each="fileTracker : ${fileTrackerList}">
+                <td th:text="${fileTracker.FileId}"></td>
+                <td th:text="${fileTracker.FileName}"></td>
+                <td th:text="${fileTracker.createdDate}"></td>
+<td>
+      <a th:href="@{/download-zip-file/{fileId}(fileId=${fileTracker.FileId})}">Download</a>
+   
+  </td>
+
+<td>
+    <span th:if="${fileTracker.isUploadToApigee}" th:text="'&#10004;'"></span>
+    <a th:unless="${fileTracker.isUploadToApigee}" th:href="@{/upload-to-apigee-portal/{fileId}(fileId=${fileTracker.FileId})}">Upload</a>
+  </td>           
+
+
+<td>
+  <span th:if="${fileTracker.isDeployedToApigee}" th:text="'&#10004;'"></span>
+  <button th:unless="${fileTracker.isDeployedToApigee}" th:if="${fileTracker.isUploadToApigee}" ><a th:href="@{/deploy-to-apigee-portal/{fileId}(fileId=${fileTracker.FileId})}">Deploy</a></button>
+  <span th:unless="${fileTracker.isUploadToApigee}" th:text="'&#10008;'"></span>
+</td>
+
+<td th:text="${fileTracker.logs}"></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright by Nagarro APIM Practice
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('file-input');
+        const fileInfo = document.getElementById('file-info');
+        const submitButton = document.querySelector('input[type="submit"]');
+
+        fileInput.addEventListener('change', function() {
+            const selectedFile = fileInput.files[0];
+            if (selectedFile) {
+                fileInfo.innerHTML = `Selected File: ${selectedFile.name}`;
+                submitButton.style.display = 'block';
+            } else {
+                fileInfo.innerHTML = 'No file selected';
+                submitButton.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
